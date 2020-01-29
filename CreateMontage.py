@@ -7,7 +7,7 @@ import FrameClass
 # and above for now)
 def getKillsPos(inVideo):
     #inVideo = cv2.VideoCapture(videoPath)
-    #inVideo.set(1,20400)
+    inVideo.set(1,2787)
     killBoard = BoardClass.Board()
     killListPos = []   #frame position of each kill
 
@@ -28,6 +28,7 @@ def getKillsPos(inVideo):
             break
 
         frame = FrameClass.Frame(frameIn)
+        frame.drawBox()
         #frame.displayMap(frameIn,"white25Map.txt",0,horizOffSet)
        # frame.displayMap(frameIn,"grey25Map.txt",0,horizOffSet)
         #frame.displayMap(frameIn,"whiteKillMap.txt",0,horizOffSet)
@@ -74,9 +75,9 @@ def getKillsPos(inVideo):
                     kCount+=1
                     print("Kill at frame " + str(inVideo.get(1)))
 
-        #cv2.imshow('frame',frameIn)
-        #if cv2.waitKey(0) & 0xFF == ord('q'):
-            #break
+        cv2.imshow('frame',frameIn)
+        if cv2.waitKey(0) & 0xFF == ord('q'):
+            break
 
         if inVideo.get(1) % 500 == 0: print(inVideo.get(1))
 
@@ -85,8 +86,8 @@ def getKillsPos(inVideo):
 
 def createVideo(killListPos,inVideo,outVideo):
     print "Creating Video"
-    bufferPre = 40
-    bufferPost = 15    # buffer time, before and after clips
+    bufferPre = 100
+    bufferPost = 50    # buffer time, before and after clips
     killTally = 0
     for i in range(0,len(killListPos)-1):
         if killListPos[i+1] - killListPos[i] <= 225:
@@ -121,7 +122,7 @@ def recordClip(inVideo,outVideo,start,end):
 
 def main():
     # list of local file for testing montage creation
-    videoList = ["C:\Users\psalmas\Videos\COD_WWII\My Great Game - WW_1 - 2017-09-02 13-35-40.mp4"]
+   # videoList = ["C:\Users\psalmas\Videos\COD_WWII\My Great Game - WW_1 - 2017-09-02 13-35-40.mp4"]
                  #"C:\Users\psalmas\Videos\COD_WWII\My Great Game - WW_1.1 - 2017-09-02 14-31-07.mp4",
                  #"C:\Users\psalmas\Videos\COD_WWII\My Great Game - WW_1.2 - 2017-09-02 14-52-58.mp4",
                  #"C:\Users\psalmas\Videos\COD_WWII\My Great Game - WW_1.3 - 2017-09-02 15-29-46.mp4",
@@ -131,6 +132,10 @@ def main():
                  #"C:\Users\psalmas\Videos\COD_WWII\My Great Game - WW_1.7 - 2017-09-02 12-06-15.mp4",
                  #"C:\Users\psalmas\Videos\COD_WWII\My Great Game - WW_1.8 - 2017-09-02 12-45-53.mp4",
                  #"C:\Users\psalmas\Videos\COD_WWII\My Great Game - WW_1.9 - 2017-09-02 13-42-34.mp4"]
+    videoList = ["C:\Users\psalmas\Videos\COD_WWII\My Great Game - WWII_May2018_1 - 2018-05-21 16-55-43.mp4",
+                 "C:\Users\psalmas\Videos\COD_WWII\My Great Game - WWII_May2018_1.1 - 2018-05-21 17-30-16.mp4",
+                 "C:\Users\psalmas\Videos\COD_WWII\My Great Game - WWII_May2018_1.12 - 2018-05-21 18-25-09.mp4",
+                 "C:\Users\psalmas\Videos\COD_WWII\My Great Game - WWII_May2018_1.13 - 2018-05-21 19-12-30.mp4"]
     firstVid = cv2.VideoCapture(videoList[0])   #basing specs of outVid on firstVid in list
     fourcc = int(firstVid.get(6))
     fps = int(firstVid.get(5))
@@ -142,9 +147,10 @@ def main():
         print "STARTING VIDEO: " + str(i)
         inVideo = cv2.VideoCapture(videoList[i])
         killListPos = getKillsPos(inVideo)
-        createVideo(killListPos,inVideo,outVideo)
+       # createVideo(killListPos,inVideo,outVideo)
         inVideo.release()
 
     outVideo.release()
 if __name__ == "__main__":
+    print "something"
     main()

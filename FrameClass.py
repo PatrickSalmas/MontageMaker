@@ -60,6 +60,7 @@ class Frame():
                 return True
         else: return False
 
+
     #Checks kill location spots by specified row
     def checkKillLocs(self,row):
         vertOffSet = 21
@@ -95,7 +96,13 @@ class Frame():
         return False
 
 
-
+    def drawBox(self):
+        for x in range(435,460):
+            self.frame[x,415] = [0,0,0]
+            self.frame[x,450] = [0,0,0]
+        for y in range(415,450):
+            self.frame[435,y] = [0,0,0]
+            self.frame[460,y] = [0,0,0]
 
 
     def displayMap(self,frame,fileIn,offset,offSetHoriz):
